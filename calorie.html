@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie App</title>
+</head>
+<body>
+    <div id="currentTime"></div>
+    <div id="secondsSinceStartOfDay"></div>
+    <div id="percentDayComplete"></div>
+    <hr/>
+    <div id="basalMetabolicRate"></div>
+    <button onclick="setBasalMetabolicRate()">Set metabolic rate</button>
+    <div id="caloriesBurnedByMetabolism"></div>
+    <hr/>
+    <div id="eatenCalories"></div>
+    <button onclick="addEatenCalories()">Add eaten calories</button>
+    <button onclick="setEatenCalories()">Set eaten calories</button>
+    <hr/>
+    <div id="exerciseCalories"></div>
+    <button onclick="addExerciseCalories()">Add exercise calories</button>
+    <button onclick="setExerciseCalories()">Set exercise calories</button>
+    <hr/>
+    <div id="finalCalorieBalance"></div>
+    <script>  
+        let basalMetabolicRate = 1600;
+        let eatenCalories = 0;
+        let exerciseCalories = 0;
+
+        function addEatenCalories() {
+            eatenCalories = Number(eatenCalories) + Number(window.prompt("Set eaten calories to:"));
+            updateCounters();
+        }
+
+        function addExerciseCalories() {
+            exerciseCalories = Number(exerciseCalories) + Number(window.prompt("Set exercise calories to:"));
+            updateCounters();
+        }
+
+        function setBasalMetabolicRate() {
+            basalMetabolicRate = Number(window.prompt("What is your basal metabolic rate?", "1600"));
+            updateCounters();
+        }
+
+        function setEatenCalories() {
+            eatenCalories = window.prompt("Set eaten calories to:");
+            updateCounters();
+        }
+
+        function setExerciseCalories() {
+            exerciseCalories = Number(window.prompt("Set exercise calories to:"));
+            updateCounters();
+        }
+
+        function updateCounters() {
+            const basalMetabolicRateElement = document.getElementById('basalMetabolicRate');
+            basalMetabolicRateElement.innerText = "Basal metabolic rate:" + basalMetabolicRate;
+
+            const currentDate = new Date();
+            const currentTimeElement = document.getElementById('currentTime');
+            currentTimeElement.innerText = "Current time: " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+
+            var startOfDay = new Date();
+            startOfDay.setUTCHours(0,0,0,0);
+            // const secondsSinceStartOfDay = (currentDate - startOfDay) / 1000 - 8 * 60 * 60; // subtract 8 hours to convert UTC to PST
+            const secondsSinceStartOfDay = (currentDate - startOfDay) / 1000 + 5.5 * 60 * 60; // add 5.5 hours to convert UTC to IST
+            const secondsSinceStartOfDayElement = document.getElementById('secondsSinceStartOfDay');
+            secondsSinceStartOfDayElement.innerText = "Seconds since start of day: " + secondsSinceStartOfDay.toFixed(0);
+
+            var fractionDayComplete = secondsSinceStartOfDay / (24 * 60 * 60);
+            var percentDayComplete = fractionDayComplete * 100;
+            const percentDayCompleteElement = document.getElementById('percentDayComplete');
+            percentDayCompleteElement.innerText = "Percent day complete: " + percentDayComplete.toFixed(3);
+
+            var caloriesBurnedByMetabolism = basalMetabolicRate * fractionDayComplete;
+            const caloriesBurnedByMetabolismElement = document.getElementById('caloriesBurnedByMetabolism');
+            caloriesBurnedByMetabolismElement.innerText = "Calories burned today by metabolism: " + caloriesBurnedByMetabolism.toFixed(2);
+
+            const eatenCaloriesElement = document.getElementById('eatenCalories');
+            eatenCaloriesElement.innerText = "Eaten calories: " + eatenCalories;
+
+            const exerciseCaloriesElement = document.getElementById('exerciseCalories');
+            exerciseCaloriesElement.innerText = "Exercise calories: " + exerciseCalories;
+
+            var finalCalorieBalance = caloriesBurnedByMetabolism + exerciseCalories - eatenCalories;
+            const finalCalorieBalanceElement = document.getElementById('finalCalorieBalance');
+            finalCalorieBalanceElement.innerText = "Final calorie balance: " + finalCalorieBalance.toFixed(2);
+        }
+
+        updateCounters();
+
+        setInterval(updateCounters, 1000);
+    </script>  
+</body>
+</html>
