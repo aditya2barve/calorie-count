@@ -16,12 +16,12 @@
     <div id="caloriesBurnedByMetabolism"></div>
     <hr/>
     <div id="eatenCalories"></div>
-    <button onclick="addEatenCalories()">Add eaten calories</button>
-    <button onclick="setEatenCalories()">Set eaten calories</button>
+    <button onclick="addCalories('eaten')">Add eaten calories</button>
+    <button onclick="setCalories('eaten')">Set eaten calories</button>
     <hr/>
     <div id="exerciseCalories"></div>
-    <button onclick="addExerciseCalories()">Add exercise calories</button>
-    <button onclick="setExerciseCalories()">Set exercise calories</button>
+    <button onclick="addCalories('exercise')">Add exercise calories</button>
+    <button onclick="setCalories('exercise')">Set exercise calories</button>
     <hr/>
     <div id="finalCalorieBalance"></div>
     <script>  
@@ -49,14 +49,8 @@
             });
         }
 
-        function addEatenCalories() {
-            calories.eaten = Number(calories.eaten) + Number(window.prompt("Set eaten calories to:"));
-            saveCounters();
-            updateCounters();
-        }
-
-        function addExerciseCalories() {
-            calories.exercise = Number(calories.exercise) + Number(window.prompt("Set exercise calories to:"));
+        function addCalories(key) {
+            calories[key] = Number(calories[key]) + Number(window.prompt(`Add ${key} calories to:`));
             saveCounters();
             updateCounters();
         }
@@ -67,14 +61,8 @@
             updateCounters();
         }
 
-        function setEatenCalories() {
-            calories.eaten = Number(window.prompt("Set eaten calories to:"));
-            saveCounters();
-            updateCounters();
-        }
-
-        function setExerciseCalories() {
-            calories.exercise = Number(window.prompt("Set exercise calories to:"));
+        function setCalories(key) {
+            calories[key] = Number(window.prompt(`Set ${key} calories to:`));
             saveCounters();
             updateCounters();
         }
