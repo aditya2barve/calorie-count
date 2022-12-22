@@ -25,32 +25,49 @@
     <hr/>
     <div id="finalCalorieBalance"></div>
     <script>  
-        let basalMetabolicRate = 1465;
-        let eatenCalories = 0;
-        let exerciseCalories = 0;
+        let basalMetabolicRate;
+        let eatenCalories;
+        let exerciseCalories;
+
+        function saveCounters() {
+            localStorage.setItem('basalMetabolicRate', basalMetabolicRate);
+            localStorage.setItem('eatenCalories', eatenCalories);
+            localStorage.setItem('exerciseCalories', exerciseCalories);
+        }
+
+        function loadCounters() {
+            basalMetabolicRate = localStorage.getItem('basalMetabolicRate') ?? 1465;
+            eatenCalories = localStorage.getItem('eatenCalories') ?? 0;
+            exerciseCalories = localStorage.getItem('exerciseCalories') ?? 0;
+        }
 
         function addEatenCalories() {
             eatenCalories = Number(eatenCalories) + Number(window.prompt("Set eaten calories to:"));
+            saveCounters();
             updateCounters();
         }
 
         function addExerciseCalories() {
             exerciseCalories = Number(exerciseCalories) + Number(window.prompt("Set exercise calories to:"));
+            saveCounters();
             updateCounters();
         }
 
         function setBasalMetabolicRate() {
-            basalMetabolicRate = Number(window.prompt("What is your basal metabolic rate?", "1465"));
+            basalMetabolicRate = Number(window.prompt("What is your basal metabolic rate?", basalMetabolicRate));
+            saveCounters();
             updateCounters();
         }
 
         function setEatenCalories() {
             eatenCalories = Number(window.prompt("Set eaten calories to:"));
+            saveCounters();
             updateCounters();
         }
 
         function setExerciseCalories() {
             exerciseCalories = Number(window.prompt("Set exercise calories to:"));
+            saveCounters();
             updateCounters();
         }
 
@@ -89,6 +106,8 @@
             finalCalorieBalanceElement.innerText = "Final calorie balance: " + finalCalorieBalance.toFixed(2);
         }
 
+        loadCounters();
+        saveCounters();
         updateCounters();
 
         setInterval(updateCounters, 1000);
