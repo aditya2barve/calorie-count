@@ -78,7 +78,8 @@
             var startOfDay = new Date();
             startOfDay.setUTCHours(0,0,0,0);
             // const secondsSinceStartOfDay = (currentDate - startOfDay) / 1000 - 8 * 60 * 60; // subtract 8 hours to convert UTC to PST
-            const secondsSinceStartOfDay = (currentDate - startOfDay) / 1000 + 5.5 * 60 * 60; // add 5.5 hours to convert UTC to IST
+            let secondsSinceStartOfDay = (currentDate - startOfDay) / 1000 + 5.5 * 60 * 60; // add 5.5 hours to convert UTC to IST
+            secondsSinceStartOfDay = secondsSinceStartOfDay % (24 * 60 * 60); // Wrap around for each day.
             const secondsSinceStartOfDayElement = document.getElementById('secondsSinceStartOfDay');
             secondsSinceStartOfDayElement.innerText = "Seconds since start of day: " + secondsSinceStartOfDay.toFixed(0);
 
