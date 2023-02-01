@@ -45,7 +45,7 @@
 
         function loadCounters() {
             Object.entries(calories).forEach(function([key, value]) {
-                calories[key] = localStorage.getItem(key) ?? defaults[key];
+                calories[key] = Number(localStorage.getItem(key)) ?? defaults[key];
             });
         }
 
