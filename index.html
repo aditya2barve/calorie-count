@@ -49,20 +49,38 @@
             });
         }
 
+        function isInputNumber() {
+            if (isNaN(input)) {
+                alert("You entered: '" + input + "'. Please enter a number");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         function addCalories(key) {
-            calories[key] = Number(calories[key]) + Number(window.prompt(`Add ${key} calories to:`));
+            input = window.prompt(`Add ${key} calories to:`);
+            if (!isInputNumber(input)) { return; }
+
+            calories[key] = Number(calories[key]) + Number(input);
             saveCounters();
             updateCounters();
         }
 
         function setBasalMetabolicRate() {
-            calories.basalMetabolicRate = Number(window.prompt("What is your basal metabolic rate?", calories.basalMetabolicRate));
+            input = window.prompt("What is your basal metabolic rate?", calories.basalMetabolicRate);
+            if (!isInputNumber(input)) { return; }
+
+            calories.basalMetabolicRate = Number(input);
             saveCounters();
             updateCounters();
         }
 
         function setCalories(key) {
-            calories[key] = Number(window.prompt(`Set ${key} calories to:`));
+            input = window.prompt(`Set ${key} calories to:`);
+            if (!isInputNumber(input)) { return; }
+
+            calories[key] = Number(input);
             saveCounters();
             updateCounters();
         }
